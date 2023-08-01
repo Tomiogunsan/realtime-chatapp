@@ -1,12 +1,31 @@
-import React from 'react'
+import React, { useState } from "react";
 
 export default function InputForm() {
+  const [val, setVal] = useState({
+    message: "",
+  });
+  function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setVal((state) => ({
+      ...state,
+      [e.target.name]: e.target.value,
+    }));
+    console.log(e.target.value);
+  }
+
+  // function hanldeSubmit(e: any) => {
+  //   e.preventDefault()
+  // }
   return (
     <div>
       <h1 className="text-3xl font-bold underline">Hello world!</h1>
       <form>
-        <input type="text" />
-        <button className="bg-blue-600">Send</button>
+        <input
+          type="text"
+          name="message"
+          value={val.message}
+          onChange={onInputChange}
+        />
+        <button className="">Send</button>
       </form>
     </div>
   );
