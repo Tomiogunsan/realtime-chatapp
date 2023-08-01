@@ -16,6 +16,7 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
     console.log("new user connected");
+    socket.emit('newEmail')
 })
 
 app.get('/', (req,res) => {
