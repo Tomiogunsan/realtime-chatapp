@@ -14,7 +14,7 @@ socket.on('newEmail', () => {
 function App() {
   return <div className="App">
 
-    <InputForm/>
+    <InputForm socket={socket}/>
   </div>;
 }
 

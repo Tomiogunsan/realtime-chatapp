@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-export default function InputForm() {
+
+export default function InputForm({socket}: any) {
   const [val, setVal] = useState({
     message: "",
   });
@@ -9,16 +10,22 @@ export default function InputForm() {
       ...state,
       [e.target.name]: e.target.value,
     }));
-    console.log(e.target.value);
+   
   }
 
-  // function hanldeSubmit(e: any) => {
-  //   e.preventDefault()
-  // }
+  function hanldeSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    socket.emit('createMessage',{
+      from: 'User',
+      text: val.message
+    } )
+   
+
+  }
   return (
     <div>
       <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <form>
+      <form onSubmit={hanldeSubmit}>
         <input
           type="text"
           name="message"

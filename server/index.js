@@ -17,6 +17,11 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
     console.log("new user connected");
     socket.emit('newEmail')
+    socket.on("createMessage" , (message) => {
+console.log('first', message)
+    }
+
+    )
 })
 
 app.get('/', (req,res) => {
