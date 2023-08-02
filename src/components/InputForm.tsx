@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-
-export default function InputForm({socket}: any) {
+type Result = {
+  from: string;
+  text: string;
+}[]
+ export default function InputForm({ socket }: any) {
+  const [message, setMessage] = useState<Result>([]);
   const [val, setVal] = useState({
     message: "",
   });
@@ -10,18 +14,30 @@ export default function InputForm({socket}: any) {
       ...state,
       [e.target.name]: e.target.value,
     }));
-   
   }
 
   function hanldeSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    socket.emit('createMessage',{
-      from: 'User',
-      text: val.message
-    } )
-   
-
+    e.preventDefault();
+    socket.emit("createMessage", {
+      from: "User",
+      text: val.message,
+    });
   }
+
+  useEffect(() => {
+    socket.on("newMessage", (data: any) => {
+      console.log(data);
+     setMessage((state) => [
+      ...state,
+      {
+        from: data.from,
+        text: data.text
+      }
+     ])
+    });
+    return () => socket.off("newMessage")
+  }, [socket]);
+
   return (
     <div>
       <h1 className="text-3xl font-bold underline">Hello world!</h1>
@@ -34,6 +50,14 @@ export default function InputForm({socket}: any) {
         />
         <button className="">Send</button>
       </form>
+
+      <div>
+        {message.map((item, i) => {
+          return(
+            <p>{item.from}</p>
+          )
+        }) }
+      </div>
     </div>
   );
 }

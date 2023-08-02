@@ -22,6 +22,10 @@ console.log('first', message)
     }
 
     )
+    socket.emit('newMessage', {
+     from: 'User',
+      text: 'welcome'
+    })
 })
 
 app.get('/', (req,res) => {
