@@ -3,6 +3,7 @@ const http = require('http')
 const cors = require('cors')
 const app = express()
 const { Server } = require("socket.io");
+const {generateLocationMessage} = require('./utils/message')
 
 app.use(cors())
 const server = http.createServer(app)
@@ -27,10 +28,8 @@ console.log('first', message)
       text: 'welcome'
     })
     socket.on("createLocation", (coords) => {
-      io.emit('newMessage', {
-       from: 'Admin', 
-       text:  `${coords.latitude}, ${coords.longitude}`
-      })
+      io.emit('newLocationMessage', generateLocationMessage('Admin',`${coords.latitude}, ${coords.longitude}` )
+      )
     })
 })
 

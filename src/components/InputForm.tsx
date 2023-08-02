@@ -4,8 +4,17 @@ type Result = {
   from: string;
   text: string;
 }[]
+
+type Location = {
+  latitude: number;
+  longitude: number;
+  from:string;
+  url: string;
+}[]
+
  export default function InputForm({ socket }: any) {
   const [message, setMessage] = useState<Result>([]);
+  const [location, setLocation] = useState<Location>([])
   const [val, setVal] = useState({
     message: "",
   });
@@ -50,12 +59,22 @@ type Result = {
       }
      ])
     });
-    return () => socket.off("newMessage")
+    socket.on("newLocationMessage", (data: any) => {
+      setLocation((state) => [
+        ...state,
+        {
+          from: data.from,
+          latitude: data.latitude,
+          longitude: data.longitude,
+          url: data.url
+        }
+      ])
+    } );
+    return () => socket.off("newMessage", 'newLocationMessage')
+    
   }, [socket]);
 
-  function handleClick (){
-   
-  }
+  
 
   return (
     <div>
@@ -80,6 +99,16 @@ type Result = {
             </div>
           );
         }) }
+      </div>
+      <div>
+        {location.map((location, i) => {
+          return(
+            <div key={i}>
+              <p>{location.from}</p>
+              <a href={location?.url}>My current location</a>
+            </div>
+          )
+        })}
       </div>
     </div>
   );
