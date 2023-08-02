@@ -26,6 +26,12 @@ console.log('first', message)
      from: 'User',
       text: 'welcome'
     })
+    socket.on("createLocation", (coords) => {
+      io.emit('newMessage', {
+       from: 'Admin', 
+       text:  `${coords.latitude}, ${coords.longitude}`
+      })
+    })
 })
 
 app.get('/', (req,res) => {

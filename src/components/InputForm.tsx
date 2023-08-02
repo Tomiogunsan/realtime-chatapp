@@ -22,6 +22,21 @@ type Result = {
       from: "User",
       text: val.message,
     });
+     if (!navigator.geolocation) {
+       return alert("Geolocation not supported by your browser.");
+     }
+     navigator.geolocation.getCurrentPosition(
+       (position) => {
+         console.log(position);
+         socket.emit("createLocation", {
+           latitude: position.coords.latitude,
+           longitude: position.coords.longitude,
+         });
+       },
+       () => {
+         alert("Unable to fetch location.");
+       }
+     );
   }
 
   useEffect(() => {
@@ -38,6 +53,10 @@ type Result = {
     return () => socket.off("newMessage")
   }, [socket]);
 
+  function handleClick (){
+   
+  }
+
   return (
     <div>
       <h1 className="text-3xl font-bold underline">Hello world!</h1>
@@ -48,14 +67,18 @@ type Result = {
           value={val.message}
           onChange={onInputChange}
         />
-        <button className="">Send</button>
+        <button className="ml-6 px-4 bg-slate-500 text-white">Send</button>
+        <button className="px-4 bg-pink-600 text-white">Send location</button>
       </form>
 
       <div>
         {message.map((item, i) => {
-          return(
-            <p>{item.from}</p>
-          )
+          return (
+            <div key={i}>
+              <p>{item.from}</p>
+              <p>{item.text}</p>
+            </div>
+          );
         }) }
       </div>
     </div>
