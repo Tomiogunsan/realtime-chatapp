@@ -37,7 +37,7 @@ type Location = {
      }
      navigator.geolocation.getCurrentPosition(
        (position) => {
-         console.log(position);
+       
          socket.emit("createLocation", {
            latitude: position.coords.latitude,
            longitude: position.coords.longitude,
@@ -51,7 +51,7 @@ type Location = {
 
   useEffect(() => {
     socket.on("newMessage", (data: any) => {
-      console.log(data);
+     
      setMessage((state) => [
       ...state,
       {
