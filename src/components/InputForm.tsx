@@ -30,6 +30,7 @@ type Location = {
     socket.emit("createMessage", {
       from: "User",
       text: val.message,
+      createAt: new Date()
     });
      if (!navigator.geolocation) {
        return alert("Geolocation not supported by your browser.");

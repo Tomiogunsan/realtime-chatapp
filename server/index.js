@@ -4,6 +4,8 @@ const cors = require('cors')
 const app = express()
 const { Server } = require("socket.io");
 const {generateLocationMessage} = require('./utils/message')
+const moment = require('moment')
+
 
 app.use(cors())
 const server = http.createServer(app)
@@ -20,6 +22,7 @@ io.on('connection', (socket) => {
     socket.emit('newEmail')
     socket.on("createMessage" , (message) => {
 console.log('first', message)
+var formattedTime = moment(message.createAt).format("h:mm a");
     }
 
     )
