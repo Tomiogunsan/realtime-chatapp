@@ -17,10 +17,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />}/>
-        <Route path='/form' element={<InputForm />}/>
+        <Route path="/" element={<Home />} />
+        <Route path="/form" element={<InputForm socket={socket} />} />
       </Routes>
-        <InputForm socket={socket} />
       
     </Router>
   );
