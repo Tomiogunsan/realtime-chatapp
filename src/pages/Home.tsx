@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { useLocation, useSearchParams} from "react-router-dom";
+
 
 const course = ["java", "javascript", "node"];
 
-export default function Home() {
+export default function Home({socket}: any) {
    
   const [data, setData] = useState({
     displayName: "",
     courseOption: "java",
   });
+
+  const {displayName, courseOption} = data
 
   function onChangeInput(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement >) {
     setData((state) => ({
@@ -21,6 +23,10 @@ export default function Home() {
 
   function onSubmitHandler(e: React.FormEvent){
     e.preventDefault()
+    socket.emit('join', {
+         displayName,
+      courseOption
+    })
   }
  
   return (
@@ -32,14 +38,14 @@ export default function Home() {
           type="text"
           placeholder="Display name"
           className="border"
-          value={data.displayName}
+          value={displayName}
           onChange={onChangeInput}
         />
 
         <select
           className="border"
           name="courseOption"
-          value={data.courseOption}
+          value={courseOption}
           onChange={onChangeInput}
         >
           <option>Select course</option>
