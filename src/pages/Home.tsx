@@ -1,38 +1,50 @@
 import React, { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const course = ["java", "javascript", "node"];
 
-export default function Home({socket}: any) {
-   
+export default function Home({ socket }: any) {
+  const navigate = useNavigate();
   const [data, setData] = useState({
     displayName: "",
     courseOption: "java",
   });
 
-  const {displayName, courseOption} = data
+  const { displayName, courseOption } = data;
 
-  function onChangeInput(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement >) {
+  function onChangeInput(
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
     setData((state) => ({
-        ...state,
-        [e.target.name]: e.target.value
-    }))
-   
-   
+      ...state,
+      [e.target.name]: e.target.value,
+    }));
   }
 
-  function onSubmitHandler(e: React.FormEvent){
-    e.preventDefault()
-    socket.emit('join', {
-         displayName,
-      courseOption
-    })
+  function onSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    socket.emit(
+      "join",
+      {
+        displayName,
+        courseOption,
+      },
+      (err: any) => {
+        if (err) {
+          toast(err);
+          navigate("/");
+        } else {
+          console.log("No error");
+        }
+      }
+    );
   }
- 
+
   return (
     <div className="flex flex-col items-center justify-center mt-10 gap-4">
       <h1>Join Room</h1>
-      <form onSubmit={() => onSubmitHandler}>
+      <form onSubmit={onSubmitHandler}>
         <input
           name="displayName"
           type="text"
@@ -47,8 +59,11 @@ export default function Home({socket}: any) {
           name="courseOption"
           value={courseOption}
           onChange={onChangeInput}
+          defaultValue='none'
         >
-          <option>Select course</option>
+          {/* <option value="select course" disabled>
+            --Select a course--
+          </option> */}
 
           {course.map((list, i) => {
             return <option key={i}>{list}</option>;

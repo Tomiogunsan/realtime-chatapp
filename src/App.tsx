@@ -3,6 +3,8 @@ import "./App.css";
 import InputForm from "./components/InputForm";
 import Home from './pages/Home'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const socket = io("ws://localhost:4000");
 socket.on("connect", () => {
@@ -15,13 +17,16 @@ socket.on("newEmail", () => {
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home socket={socket} />} />
-        <Route path="/form" element={<InputForm socket={socket} />} />
-      </Routes>
-      
-    </Router>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home socket={socket} />} />
+          <Route path="/form" element={<InputForm socket={socket} />} />
+        </Routes>
+      </Router>
+
+      <ToastContainer />
+    </>
   );
 }
 

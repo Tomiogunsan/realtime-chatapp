@@ -1,14 +1,13 @@
-const express = require('express')
-const http = require('http')
-const cors = require('cors')
-const app = express()
+const express = require("express");
+const http = require("http");
+const cors = require("cors");
+const app = express();
 const { Server } = require("socket.io");
-const {generateLocationMessage} = require('./utils/message')
-const moment = require('moment')
+const { generateLocationMessage } = require("./utils/message");
+const moment = require("moment");
 
-
-app.use(cors())
-const server = http.createServer(app)
+app.use(cors());
+const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
@@ -17,28 +16,55 @@ const io = new Server(server, {
   },
 });
 
-io.on('connection', (socket) => {
-    console.log("new user connected");
-    socket.emit('newEmail')
-    socket.on("createMessage" , (message) => {
-console.log('first', message)
-var formattedTime = moment(message.createAt).format("h:mm a");
+io.on("connection", (socket) => {
+  console.log("new user connected");
+  socket.emit("newEmail");
+  socket.on("createMessage", (message) => {
+    console.log("first", message);
+  });
+
+  socket.on("join", (data, callback) => {
+    console.log(data)
+    if(!data){
+      callback("Name and room name are required.");
     }
+    socket.join(data.courseOption)
+    socket.emit(
+      "newMessage",
+      {from:"Admin", text: "Welcome to the chat app"}
+    );
+    socket.broadcast.to(data.courseOption).emit({
+      from: 'Admin',
+      text: `${data.name} has joined.`
+    });
 
-    )
-    socket.emit('newMessage', {
-     from: 'User',
-      text: 'welcome'
-    })
-    socket.on("createLocation", (coords) => {
-      io.emit('newLocationMessage', generateLocationMessage('Admin',`${coords.latitude}, ${coords.longitude}` )
+    // socket.broadcast.emit(
+    //   "newMessage",
+    //   { from: "Admin", text:"New user joined"}
+    // );
+
+    // to emit to single person in a room
+    // io.emit -> io.to('java').emit
+    //broadcast, meaning that we want to send an event to everybody in a room except for the current user
+   //socket.broadcast.emit -> socket.broadcast.to('java')
+    callback()
+  })
+  socket.emit("newMessage", {
+    from: "User",
+    text: "welcome",
+  });
+  socket.on("createLocation", (coords) => {
+    io.emit(
+      "newLocationMessage",
+      generateLocationMessage(
+        "Admin",
+        `${coords.latitude}, ${coords.longitude}`
       )
-    })
-})
+    );
+  });
+});
 
-app.get('/', (req,res) => {
-    res.send('Hello world')
-})
-server.listen(4000, () => 
-console.log("Server is running on port 3000")
-);
+app.get("/", (req, res) => {
+  res.send("Hello world");
+});
+server.listen(4000, () => console.log("Server is running on port 3000"));
