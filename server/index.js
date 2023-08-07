@@ -17,7 +17,7 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("new user connected");
+  console.log(`User connected ${socket.id}`);
   socket.emit("newEmail");
   socket.on("createMessage", (message) => {
     console.log("first", message);
@@ -25,13 +25,13 @@ io.on("connection", (socket) => {
 
   socket.on("join", (data) => {
     console.log(data)
-   
-    socket.join(data.courseOption)
+   const {displayName, courseOption} = data;
+    socket.join(courseOption)
     socket.emit(
       "newMessage",
       {from:"Admin", text: "Welcome to the chat app"}
     );
-    socket.broadcast.to(data.courseOption).emit('newMessage', {
+    socket.to(data.courseOption).emit('newMessage', {
       from: "Admin",
       text: `${data.displayName} has joined.`,
     }, console.log(data.courseOption));
@@ -47,19 +47,8 @@ io.on("connection", (socket) => {
    //socket.broadcast.emit -> socket.broadcast.to('java')
   
   })
-  socket.emit("newMessage", {
-    from: "User",
-    text: "welcome",
-  });
-  socket.on("createLocation", (coords) => {
-    io.emit(
-      "newLocationMessage",
-      generateLocationMessage(
-        "Admin",
-        `${coords.latitude}, ${coords.longitude}`
-      )
-    );
-  });
+ 
+  
 });
 
 app.get("/", (req, res) => {

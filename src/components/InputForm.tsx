@@ -73,7 +73,7 @@ type Location = {
     } );
     return () => socket.off("newMessage", 'newLocationMessage')
     
-  }, [socket]);
+  }, []);
 
   
 
