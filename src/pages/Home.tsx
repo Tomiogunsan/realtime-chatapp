@@ -37,7 +37,8 @@ export default function Home({ socket }: any) {
         } else {
           console.log("No error");
         }
-      }
+      },
+      navigate('/form')
     );
   }
 

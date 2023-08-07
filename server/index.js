@@ -23,20 +23,18 @@ io.on("connection", (socket) => {
     console.log("first", message);
   });
 
-  socket.on("join", (data, callback) => {
+  socket.on("join", (data) => {
     console.log(data)
-    if(!data){
-      callback("Name and room name are required.");
-    }
+   
     socket.join(data.courseOption)
     socket.emit(
       "newMessage",
       {from:"Admin", text: "Welcome to the chat app"}
     );
-    socket.broadcast.to(data.courseOption).emit({
-      from: 'Admin',
-      text: `${data.name} has joined.`
-    });
+    socket.broadcast.to(data.courseOption).emit('newMessage', {
+      from: "Admin",
+      text: `${data.displayName} has joined.`,
+    }, console.log(data.courseOption));
 
     // socket.broadcast.emit(
     //   "newMessage",
@@ -47,7 +45,7 @@ io.on("connection", (socket) => {
     // io.emit -> io.to('java').emit
     //broadcast, meaning that we want to send an event to everybody in a room except for the current user
    //socket.broadcast.emit -> socket.broadcast.to('java')
-    callback()
+  
   })
   socket.emit("newMessage", {
     from: "User",
