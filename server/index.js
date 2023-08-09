@@ -42,7 +42,7 @@ io.on("connection", (socket) => {
       socket.to(group).emit("receiveMessage", {
         message: `${displayName} has joined the chat room`,
         from: "Admin",
-        createdtime,
+        createdtime
       });
       socket.emit("receiveMessage", {
         message: `Welcome ${displayName}`,
