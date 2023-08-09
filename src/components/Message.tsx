@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function chat() {
+export default function Message() {
   return (
     <div>chat</div>
   )

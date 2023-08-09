@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 import "./App.css";
-import InputForm from "./components/InputForm";
+import Chat from "./pages/Chat";
 import Home from './pages/Home'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -21,7 +21,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home socket={socket} />} />
-          <Route path="/chat" element={<InputForm socket={socket} />} />
+          <Route path="/chat" element={<Chat socket={socket} />} />
         </Routes>
       </Router>
 

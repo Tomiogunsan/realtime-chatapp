@@ -3,7 +3,7 @@ const http = require("http");
 const cors = require("cors");
 const app = express();
 const { Server } = require("socket.io");
-const { MongoClient } = require("mongodb")
+const { MongoClient, Admin } = require("mongodb");
 const { generateLocationMessage } = require("./utils/message");
 const moment = require("moment");
 
@@ -28,10 +28,45 @@ io.on("connection", (socket) => {
     console.log("first", message);
   });
 
-  socket.on("join", (data) => {
-    console.log(data)
-   const {displayName, courseOption} = data;
-    socket.join(courseOption)
+  socket.on("join", async (data) => {
+    console.log(data);
+    const { displayName, group } = data;
+    try {
+      let result = await collection.findOne({ _id: group });
+      if (!result) {
+        await collection.insertOne({ _id: group, messages: [] });
+      }
+      socket.join(group);
+      let createdtime = Date.now();
+      console.log(createdtime);
+      socket.to(group).emit("receiveMessage", {
+        message: `${displayName} has joined the chat room`,
+        from: Admin,
+        createdtime,
+      });
+      socket.emit("receiveMessage", {
+        message: `Welcome ${displayName}`,
+        from: Admin,
+        createdtime,
+      });
+      socket.activeRoom = group
+    } catch (e) {
+      console.log(e)
+    }
+    
+    socket.on("message", (message) => {
+      collection.updateOne(
+        { _id: socket.activeRoom },
+        {
+          "$push": {
+            "messages": message,
+          },
+        }
+      );
+      io.to(socket.activeRoom).emit("message", message);
+    })
+    
+
     
 
     // socket.broadcast.emit(
@@ -42,25 +77,31 @@ io.on("connection", (socket) => {
     // to emit to single person in a room
     // io.emit -> io.to('java').emit
     //broadcast, meaning that we want to send an event to everybody in a room except for the current user
-   //socket.broadcast.emit -> socket.broadcast.to('java')
-  
-  })
- 
-  
+    //socket.broadcast.emit -> socket.broadcast.to('java')
+  });
 });
 
+let collection;
 
+server.listen(4000, async () => {
+  try {
+    await client.connect();
+    collection = client.db("chatApp").collection("chatApp");
+    console.log("Listening on port :%s...", server.address().port);
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 app.get("/", (req, res) => {
   res.send("Hello world");
 });
-server.listen(4000, async () =>{
+
+app.get("/chat", async (req, res) => {
   try {
-    await client.connect()
-     const collection = client.db("chatApp").collection("chatApp");
-             console.log("Listening on port :%s...", server.address().port);
-  } catch (error) {
-    console.error(error);
-     
+    let result = await collection.findOne({ _id: req.query.group });
+    res.send(result);
+  } catch (e) {
+    res.status(500).send({ message: e.message });
   }
 });
