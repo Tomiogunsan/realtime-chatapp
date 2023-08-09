@@ -21,7 +21,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home socket={socket} />} />
-          <Route path="/form" element={<InputForm socket={socket} />} />
+          <Route path="/chat" element={<InputForm socket={socket} />} />
         </Routes>
       </Router>
 

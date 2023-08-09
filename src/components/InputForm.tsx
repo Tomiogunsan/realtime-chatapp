@@ -49,38 +49,14 @@ type Location = {
      );
   }
 
-  useEffect(() => {
-    socket.on("newMessage", (data: any) => {
-     
-     setMessage((state) => [
-      ...state,
-      {
-        from: data.from,
-        text: data.text
-      }
-     ])
-    });
-    socket.on("newLocationMessage", (data: any) => {
-      setLocation((state) => [
-        ...state,
-        {
-          from: data.from,
-          latitude: data.latitude,
-          longitude: data.longitude,
-          url: data.url
-        }
-      ])
-    } );
-    return () => socket.off("newMessage", 'newLocationMessage')
-    
-  }, []);
+ 
 
   
 
   return (
     <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <form onSubmit={hanldeSubmit}>
+      <h1 className="text-3xl font-bold underline">Hello world Chat</h1>
+      {/* <form onSubmit={hanldeSubmit}>
         <input
           type="text"
           name="message"
@@ -89,28 +65,9 @@ type Location = {
         />
         <button className="ml-6 px-4 bg-slate-500 text-white">Send</button>
         <button className="px-4 bg-pink-600 text-white">Send location</button>
-      </form>
+      </form> */}
 
-      <div>
-        {message.map((item, i) => {
-          return (
-            <div key={i}>
-              <p>{item.from}</p>
-              <p>{item.text}</p>
-            </div>
-          );
-        }) }
-      </div>
-      <div>
-        {location.map((location, i) => {
-          return(
-            <div key={i}>
-              <p>{location.from}</p>
-              <a href={location?.url}>My current location</a>
-            </div>
-          )
-        })}
-      </div>
+      
     </div>
   );
 }
