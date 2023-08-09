@@ -3,8 +3,13 @@ const http = require("http");
 const cors = require("cors");
 const app = express();
 const { Server } = require("socket.io");
+const { MongoClient } = require("mongodb")
 const { generateLocationMessage } = require("./utils/message");
 const moment = require("moment");
+
+const client = new MongoClient(
+  "mongodb+srv://tomiafolayan:Eniolorunfe@cluster0.5ztnlcc.mongodb.net/?retryWrites=true&w=majority"
+);
 
 app.use(cors());
 const server = http.createServer(app);
@@ -27,14 +32,7 @@ io.on("connection", (socket) => {
     console.log(data)
    const {displayName, courseOption} = data;
     socket.join(courseOption)
-    socket.emit(
-      "newMessage",
-      {from:"Admin", text: "Welcome to the chat app"}
-    );
-    socket.to(data.courseOption).emit('newMessage', {
-      from: "Admin",
-      text: `${data.displayName} has joined.`,
-    }, console.log(data.courseOption));
+    
 
     // socket.broadcast.emit(
     //   "newMessage",
@@ -51,7 +49,18 @@ io.on("connection", (socket) => {
   
 });
 
+
+
 app.get("/", (req, res) => {
   res.send("Hello world");
 });
-server.listen(4000, () => console.log("Server is running on port 3000"));
+server.listen(4000, async () =>{
+  try {
+    await client.connect()
+     const collection = client.db("chatApp").collection("chatApp");
+             console.log("Listening on port :%s...", server.address().port);
+  } catch (error) {
+    console.error(error);
+     
+  }
+});
