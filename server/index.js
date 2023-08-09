@@ -41,12 +41,12 @@ io.on("connection", (socket) => {
       console.log(createdtime);
       socket.to(group).emit("receiveMessage", {
         message: `${displayName} has joined the chat room`,
-        from: Admin,
+        from: "Admin",
         createdtime,
       });
       socket.emit("receiveMessage", {
         message: `Welcome ${displayName}`,
-        from: Admin,
+        from: "Admin",
         createdtime,
       });
       socket.activeRoom = group
