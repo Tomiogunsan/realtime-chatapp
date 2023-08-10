@@ -32,32 +32,33 @@ io.on("connection", (socket) => {
     console.log(data);
     const { displayName, group } = data;
     try {
-      let result = await collection.findOne({ _id: data });
+      let result = await collection.findOne({ _id: group });
       if (!result) {
-        await collection.insertOne({ _id: data, messages: [] });
+        await collection.insertOne({ _id: group, messages: [] });
       }
       socket.join(group);
       let createdtime = Date.now();
       console.log(createdtime);
-      socket.to(group).emit("receiveMessage", {
+      socket.broadcast.to(group).emit("receiveMessage", {
         message: `${displayName} has joined the chat room`,
         from: "Admin",
-        createdtime
+        createdtime,
       });
       socket.emit("receiveMessage", {
         message: `Welcome ${displayName}`,
         from: "Admin",
         createdtime,
       });
-      socket.activeRoom = group
-    //    socket.to(group).emit("groupUsers", chatRoomUsers);
-    //    socket.emit("groupUsers", chatRoomUsers);
+      socket.activeRoom = group;
+      //    socket.to(group).emit("groupUsers", chatRoomUsers);
+      //    socket.emit("groupUsers", chatRoomUsers);
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-    
-    socket.on("message", (message) => {
-      collection.updateOne(
+
+    socket.on("sendMessage",  (message) => {
+      console.log(message)
+       collection.updateOne(
         { _id: socket.activeRoom },
         {
           "$push": {
@@ -67,9 +68,11 @@ io.on("connection", (socket) => {
       );
       io.to(socket.activeRoom).emit("message", message);
     })
-    
 
-    
+    // socket.on("sendMessage", (data) => {
+    //   console.log(data);
+    //   // io.in(group).emit("receive_message", data);
+    // });
 
     // socket.broadcast.emit(
     //   "newMessage",

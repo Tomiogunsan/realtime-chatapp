@@ -15,22 +15,9 @@ const groupArray = ["Titan", "Amazons", "Viva", "Lipo"];
 
 
 export default function Home({ socket, displayName, group, onChangeInput }: Props) {
+  
   const navigate = useNavigate();
-  // const [data, setData] = useState({
-  //   displayName: "",
-  //   group: "",
-  // });
-
-  // const { displayName, group } = data;
-
-  // function onChangeInput(
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  // ) {
-  //   setData((state) => ({
-  //     ...state,
-  //     [e.target.name]: e.target.value,
-  //   }));
-  // }
+  
 
   function joinRoom() {
     if (displayName !== "" && group !== "") {
