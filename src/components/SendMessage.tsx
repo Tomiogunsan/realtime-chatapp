@@ -1,14 +1,34 @@
 import React, { useState } from 'react'
 
-export default function SendMessage() {
+type Props = {
+  socket: any;
+  displayName: string;
+  group: string;
+}
+
+export default function SendMessage({socket, displayName, group}: Props) {
      const [val, setVal] = useState({
        message: "",
      });
+     const{ message} = val
      function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
        setVal((state) => ({
          ...state,
          [e.target.name]: e.target.value,
        }));
+     }
+
+     function sendMessage(){
+      if(message !== ''){
+        const createdtime = Date.now()
+        socket.emit('sendMessage', {
+          message,
+          displayName,
+          createdtime,
+          group
+
+        })
+      }
      }
   return (
     <div>

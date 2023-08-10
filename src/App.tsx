@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useState } from "react";
 
 const socket = io("ws://localhost:4000");
 socket.on("connect", () => {
@@ -16,12 +17,42 @@ socket.on("newEmail", () => {
 });
 
 function App() {
+  const [data, setData] = useState({
+    displayName: "",
+    group: "",
+  });
+   const { displayName, group } = data;
+
+   function onChangeInput(
+     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+   ) {
+     setData((state) => ({
+       ...state,
+       [e.target.name]: e.target.value,
+     }));
+   }
+
   return (
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Home socket={socket} />} />
-          <Route path="/chat" element={<Chat socket={socket} />} />
+          <Route
+            path="/"
+            element={
+              <Home
+                socket={socket}
+                displayName={displayName}
+                group={group}
+                onChangeInput={onChangeInput}
+              />
+            }
+          />
+          <Route
+            path="/chat"
+            element={
+              <Chat socket={socket} displayName={displayName} group={group} />
+            }
+          />
         </Routes>
       </Router>
 

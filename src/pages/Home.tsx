@@ -2,25 +2,35 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+type Props = {
+  socket: any;
+  displayName: string;
+  group: string;
+  onChangeInput: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+};
+
 const groupArray = ["Titan", "Amazons", "Viva", "Lipo"];
 
-export default function Home({ socket }: any) {
+
+export default function Home({ socket, displayName, group, onChangeInput }: Props) {
   const navigate = useNavigate();
-  const [data, setData] = useState({
-    displayName: "",
-    group: "",
-  });
+  // const [data, setData] = useState({
+  //   displayName: "",
+  //   group: "",
+  // });
 
-  const { displayName, group } = data;
+  // const { displayName, group } = data;
 
-  function onChangeInput(
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) {
-    setData((state) => ({
-      ...state,
-      [e.target.name]: e.target.value,
-    }));
-  }
+  // function onChangeInput(
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  // ) {
+  //   setData((state) => ({
+  //     ...state,
+  //     [e.target.name]: e.target.value,
+  //   }));
+  // }
 
   function joinRoom() {
     if (displayName !== "" && group !== "") {

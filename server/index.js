@@ -32,9 +32,9 @@ io.on("connection", (socket) => {
     console.log(data);
     const { displayName, group } = data;
     try {
-      let result = await collection.findOne({ _id: group });
+      let result = await collection.findOne({ _id: data });
       if (!result) {
-        await collection.insertOne({ _id: group, messages: [] });
+        await collection.insertOne({ _id: data, messages: [] });
       }
       socket.join(group);
       let createdtime = Date.now();
@@ -50,6 +50,8 @@ io.on("connection", (socket) => {
         createdtime,
       });
       socket.activeRoom = group
+    //    socket.to(group).emit("groupUsers", chatRoomUsers);
+    //    socket.emit("groupUsers", chatRoomUsers);
     } catch (e) {
       console.log(e)
     }
