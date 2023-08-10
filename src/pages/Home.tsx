@@ -13,15 +13,21 @@ type Props = {
 
 const groupArray = ["Titan", "Amazons", "Viva", "Lipo"];
 
-
-export default function Home({ socket, displayName, group, onChangeInput }: Props) {
-  
+export default function Home({
+  socket,
+  displayName,
+  group,
+  onChangeInput,
+}: Props) {
   const navigate = useNavigate();
-  
 
   function joinRoom() {
     if (displayName !== "" && group !== "") {
-      socket.emit("join", { displayName, group });
+      socket.emit(
+        "join",
+
+        { displayName, group }
+      );
     }
     navigate("/chat");
   }

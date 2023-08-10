@@ -39,7 +39,7 @@ io.on("connection", (socket) => {
       socket.join(group);
       let createdtime = Date.now();
       console.log(createdtime);
-      socket.broadcast.to(group).emit("receiveMessage", {
+      io.to(group).emit("receiveMessage", {
         message: `${displayName} has joined the chat room`,
         from: "Admin",
         createdtime,
@@ -66,7 +66,7 @@ io.on("connection", (socket) => {
           },
         }
       );
-      io.to(socket.activeRoom).emit("message", message);
+      io.to(socket.activeRoom).emit("messageRecieved", message);
     })
 
     // socket.on("sendMessage", (data) => {
