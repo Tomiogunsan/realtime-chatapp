@@ -26,7 +26,7 @@ export default function Home({
       socket.emit(
         "join",
 
-        { displayName, group }
+        { displayName, group,  }
       );
     }
     navigate("/chat");

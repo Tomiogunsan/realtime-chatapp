@@ -33,6 +33,7 @@ io.on("connection", (socket) => {
     const { displayName, group } = data;
     try {
       let result = await collection.findOne({ _id: group });
+
       if (!result) {
         await collection.insertOne({ _id: group, messages: [] });
       }
@@ -56,18 +57,18 @@ io.on("connection", (socket) => {
       console.log(e);
     }
 
-    socket.on("sendMessage",  (message) => {
-      console.log(message)
-       collection.updateOne(
+    socket.on("sendMessage", (message) => {
+      console.log(message);
+      collection.updateOne(
         { _id: socket.activeRoom },
         {
-          "$push": {
-            "messages": message,
+          $push: {
+            messages: message,
           },
         }
       );
       io.to(socket.activeRoom).emit("messageRecieved", message);
-    })
+    });
 
     // socket.on("sendMessage", (data) => {
     //   console.log(data);
