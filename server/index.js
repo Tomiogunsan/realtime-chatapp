@@ -5,6 +5,10 @@ const server = http.createServer(app);
 // const { API_PORT } = process.env;
 // const port = process.env.PORT || API_PORT;
 
+app.get("/", (req, res) => {
+  res.send("Hello world");
+ });
+
 // server listening
 server.listen(4000, () => {
   console.log("Server running on port 4000")
