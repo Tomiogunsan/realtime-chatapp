@@ -30,7 +30,7 @@ io.on("connection", (socket) => {
 
   socket.on("join", async (data) => {
     console.log(data);
-    const { displayName, group } = data;
+    const { displayName, group, id } = data;
     try {
       let result = await collection.findOne({ _id: group });
 
@@ -62,8 +62,8 @@ io.on("connection", (socket) => {
       collection.updateOne(
         { _id: socket.activeRoom },
         {
-          $push: {
-            messages: message,
+          "$push": {
+            "messages": message,
           },
         }
       );

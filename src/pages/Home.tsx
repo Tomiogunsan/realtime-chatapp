@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 
 type Props = {
@@ -20,13 +21,14 @@ export default function Home({
   onChangeInput,
 }: Props) {
   const navigate = useNavigate();
-
+  let id = uuidv4();
+  console.log(id)
   function joinRoom() {
     if (displayName !== "" && group !== "") {
       socket.emit(
         "join",
 
-        { displayName, group,  }
+        { displayName, group, id }
       );
     }
     navigate("/chat");
