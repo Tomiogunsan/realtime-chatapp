@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
+import Register from "./pages/Register";
 
 const socket = io("ws://localhost:4000");
 socket.on("connect", () => {
@@ -47,6 +48,7 @@ function App() {
               />
             }
           />
+          <Route  path="/register" element={<Register/>}/>
           <Route
             path="/chat"
             element={
