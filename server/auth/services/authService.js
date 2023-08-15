@@ -52,6 +52,8 @@ class Authservice {
     }
       
   }
+
+  
 }
 
 module.exports = new Authservice();
