@@ -1,11 +1,12 @@
 import React from "react";
 import Input from "../sharedComponent/input/Input";
 import Button from "../sharedComponent/button/button";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   return (
     <div className=" bg-[#c1cbd8] h-[100vh] w-full py-28">
-      <div className=" mx-auto bg-white w-[550px] h-[500px] rounded-2xl shadow-2xl pt-16">
+      <div className=" mx-auto bg-[#ffffff] w-[550px] h-[550px] rounded-2xl shadow-2xl pt-16">
         <div className="flex flex-col items-center justify-center">
           <Input
             label="Firstname"
@@ -47,6 +48,14 @@ export default function Register() {
             {" "}
             Create Account
           </Button>
+          <div className="flex gap-[4px] items-center pt-4">
+            <p className="text-[#9495a2] pt-[2px]">Already have an account?</p>
+            <Link to="/login">
+              <Button as="a" variant="link">
+                Sign In
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

@@ -15,8 +15,8 @@ type ButtonProps<C extends React.ElementType> = PolymorphicComponentProps<
 const btnClasses = "px-4 py-3 transition duration-300";
 
 const VARIANTS = {
-  primary: "bg-[#3da3dd] text-[#f4f4fe] hover:bg-[#3d3fdb]",
-  link: "text-[#165dff] hover:text-[#3d3fdb]  !px-0 !pb-1",
+  primary: "bg-[#0C97E7] text-[#f4f4fe] hover:bg-[#055486]",
+  link: "text-[#0C97E7] hover:text-[#055486]  !px-0 !pb-1",
 };
 
 export default function Button<C extends React.ElementType = "button">(
