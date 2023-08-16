@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../sharedComponent/input/Input";
 import Button from "../sharedComponent/button/button";
 import { Link } from "react-router-dom";
 
+
+
 export default function Register() {
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    password: "",
+    email: "",
+})
+
+const {firstName, lastName, password, email} = form
+
+  function onInputChange(e: React.ChangeEvent<HTMLInputElement>){
+    setForm((state) => ({
+      ...state,
+      [e.target.name]: e.target.value,
+    }));
+   
+  }
   return (
     <div className=" bg-[#c1cbd8] h-[100vh] w-full py-28">
       <div className=" mx-auto bg-[#ffffff] w-[550px] h-[550px] rounded-2xl shadow-2xl pt-16">
@@ -12,33 +30,33 @@ export default function Register() {
             label="Firstname"
             placeholder="Enter your firstname"
             type="input"
-            name=""
-            // value={}
-            // onChange={}
+            name="firstName"
+            value={firstName}
+            onChange={onInputChange}
           />
           <Input
             label="Lastname"
             placeholder="Enter your lastname"
             type="input"
-            name=""
-            // value={}
-            // onChange={}
+            name="lastName"
+            value={lastName}
+            onChange={onInputChange}
           />
           <Input
             label="Email"
             placeholder="Enter your email"
             type="email"
-            name=""
-            // value={}
-            // onChange={}
+            name="email"
+            value={email}
+            onChange={onInputChange}
           />
           <Input
             label="Password"
             placeholder="Enter your password"
             type="password"
-            name=""
-            // value={}
-            // onChange={}
+            name="password"
+            value={password}
+            onChange={onInputChange}
           />
           <Button
             variant="primary"
