@@ -1,9 +1,9 @@
 import React from 'react'
-import Input from '../sharedComponent/input/Input';
 import Button from '../sharedComponent/button/button';
 import { Link } from 'react-router-dom';
+import Input from '../sharedComponent/input/Input';
 
-export default function Login() {
+export default function ForgotPassword() {
   return (
     <div className=" bg-[#c1cbd8] h-[100vh] w-full py-28">
       <div className=" mx-auto bg-[#ffffff] w-[550px] h-[450px] rounded-2xl shadow-2xl pt-16">
@@ -24,30 +24,15 @@ export default function Login() {
             // value={}
             // onChange={}
           />
-          <div className=' flex justify-end w-full mr-[200px] pb-[2px]'>
+          <div className=" flex justify-end w-full mr-[200px] pb-[2px]">
             <Link to="/forgot-password">
-              <Button as="a" variant="link" >
+              <Button as="a" variant="link">
                 Forgot Password?
               </Button>
             </Link>
           </div>
 
-          <Button
-            variant="primary"
-            type="submit"
-            className=" w-[60%] rounded-md font-semibold"
-          >
-            {" "}
-            Login
-          </Button>
-          <div className="flex gap-[4px] items-center pt-4">
-            <p className="text-[#9495a2] pt-[2px]">Not registered yet?</p>
-            <Link to="/register">
-              <Button as="a" variant="link">
-                Create an account
-              </Button>
-            </Link>
-          </div>
+          
         </div>
       </div>
     </div>

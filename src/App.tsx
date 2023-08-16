@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const socket = io("ws://localhost:4000");
 socket.on("connect", () => {
@@ -49,8 +50,9 @@ function App() {
               />
             }
           />
-          <Route  path="/register" element={<Register/>}/>
-          <Route path="/login" element={<Login/>} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route
             path="/chat"
             element={
