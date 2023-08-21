@@ -3,9 +3,7 @@ require("./config/database").connect();
 const passport = require("passport");
 require("./middleware/passport-config")(passport);
 const express = require("express");
-const User = require("./models/users");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+
 const routes = require("./routes");
 
 const app = express();
