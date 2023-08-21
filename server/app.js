@@ -13,7 +13,7 @@ const uriEncoder = bodyParser.urlencoded({ extended: false });
 
 app.use(uriEncoder);
 app.use(jsonParser);
-// app.use(express.json());
+
 app.use(passport.initialize());
 app.use("/api", routes);
 // Register
