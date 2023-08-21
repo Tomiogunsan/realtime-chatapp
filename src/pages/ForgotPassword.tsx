@@ -16,14 +16,7 @@ export default function ForgotPassword() {
             // value={}
             // onChange={}
           />
-          <Input
-            label="Password"
-            placeholder="Enter your password"
-            type="password"
-            name=""
-            // value={}
-            // onChange={}
-          />
+         
           <div className=" flex justify-end w-full mr-[200px] pb-[2px]">
             <Link to="/forgot-password">
               <Button as="a" variant="link">

@@ -9,6 +9,8 @@ import { useState } from "react";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
+import Verify from "./pages/Verify";
+import Reset from "./pages/Reset";
 
 const socket = io("ws://localhost:4000");
 socket.on("connect", () => {
@@ -52,6 +54,8 @@ function App() {
           />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path='/verify/:userId/:userToken' element={<Verify/>} />
+          <Route path='/reset/:userId/:resetToken' element={<Reset/> } />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route
             path="/chat"

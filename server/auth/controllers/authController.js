@@ -20,7 +20,7 @@ class AuthController {
       // validate if user exist in our database
 
       const register = await authService.RegisterUser(req?.body);
-      console.log("register", register);
+    
       return res.status(register?.code).send(register);
     } catch (error) {
       console.log("error", error);
@@ -34,6 +34,24 @@ class AuthController {
       return errorResponse({}, "Unautorized", 401)
     }
     
+  }
+
+  async RequestPasswordReset(req, res){
+    try {
+      const requestPasswordReset = await authService.RequestPasswordReset(req.body.email)
+      return res.json(requestPasswordReset);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async ResetPassword(req, res){
+try {
+  const resetPassword = await authService.ResetPassword(req.body.userId, req.body.token, req.body.password)
+  return res.json(resetPassword)
+} catch (error) {
+  console.log(error)
+}
   }
 }
 
