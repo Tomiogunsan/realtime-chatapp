@@ -3,12 +3,18 @@ import Input from "../sharedComponent/input/Input";
 import Button from "../sharedComponent/button/button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify";
+import { string, object } from "yup";
 
 export default function Register() {
- 
   const { REACT_APP_BASE_URL } = process.env;
   const navigate = useNavigate();
+  const [errors, setErrors] = useState({
+    firstName: false,
+    lastName: false,
+    password: false,
+    email: false,
+  });
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -17,6 +23,14 @@ export default function Register() {
   });
 
   const { firstName, lastName, password, email } = form;
+
+  // create validation schema:
+  const formSchema = object({
+    firstName: string().required(),
+    lastName: string().required(),
+    email: string().required(),
+    password: string().required(),
+  });
 
   function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm((state) => ({
@@ -37,15 +51,12 @@ export default function Register() {
       console.log(configuration);
       navigate("/");
     } catch (error: any) {
-      
-      toast.error("User Already Exist. Please Login")
-      
+      toast.error("User Already Exist. Please Login");
     }
   }
 
   return (
     <div className=" bg-[#c1cbd8] h-[100vh] w-full py-28">
-      
       <form
         className=" mx-auto bg-[#ffffff] w-[550px] h-[550px] rounded-2xl shadow-2xl pt-16"
         onSubmit={handleSubmit}
