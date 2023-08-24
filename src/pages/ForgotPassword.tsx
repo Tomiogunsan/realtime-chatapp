@@ -1,7 +1,7 @@
-import React from 'react'
-import Button from '../sharedComponent/button/button';
-import { Link } from 'react-router-dom';
-import Input from '../sharedComponent/input/Input';
+import React from "react";
+import Button from "../sharedComponent/button/button";
+import { Link } from "react-router-dom";
+import Input from "../sharedComponent/input/Input";
 
 export default function ForgotPassword() {
   return (
@@ -16,16 +16,10 @@ export default function ForgotPassword() {
             // value={}
             // onChange={}
           />
-         
-          <div className=" flex justify-end w-full mr-[200px] pb-[2px]">
-            <Link to="/forgot-password">
-              <Button as="a" variant="link">
-                Forgot Password?
-              </Button>
-            </Link>
-          </div>
 
-          
+          <Button type="submit" variant="primary">
+            Submit
+          </Button>
         </div>
       </div>
     </div>
