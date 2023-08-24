@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 import "./App.css";
 import Chat from "./pages/Chat";
-import Home from './pages/Home'
+import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,16 +26,16 @@ function App() {
     displayName: "",
     group: "",
   });
-   const { displayName, group } = data;
+  const { displayName, group } = data;
 
-   function onChangeInput(
-     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-   ) {
-     setData((state) => ({
-       ...state,
-       [e.target.name]: e.target.value,
-     }));
-   }
+  function onChangeInput(
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
+    setData((state) => ({
+      ...state,
+      [e.target.name]: e.target.value,
+    }));
+  }
 
   return (
     <>
@@ -54,8 +54,11 @@ function App() {
           />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path='/verify/:userId/:userToken' element={<Verify/>} />
-          <Route path='/reset/:userId/:resetToken' element={<Reset/> } />
+          <Route path="/verify/:userId">
+            <Route path=":userToken" element={<Verify />} />
+          </Route>
+
+          <Route path="/reset/:userId/:resetToken" element={<Reset />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route
             path="/chat"

@@ -40,7 +40,7 @@ class EmailService {
       to: to,
       subject: "Email verification",
       text: "Email Verification",
-      html: `<p>Dear user, please verify your email for chat app</p> <p>This <a href="https://localhost:3000/verify/${userId}/${userToken}">link<a/>will verify your email address</p><p>If you do not register on chatApp please ignore this mail</p>`,
+      html: `<p>Dear user, please verify your email for chat app</p> <p>This <a href="http://localhost:3000/verify/${userId}/${userToken}">link<a/>will verify your email address</p><p>If you do not register on chatApp please ignore this mail</p>`,
     };
     transport.sendMail(mailOptions, function (err, result) {
       if (err) {
@@ -49,6 +49,7 @@ class EmailService {
       }
       console.log("message sent successfully", result.response);
       return result;
+      
     });
   }
   sendPasswordResetEmail(to, userId, resetToken) {
@@ -57,7 +58,7 @@ class EmailService {
       to: to,
       subject: "Password Reset",
       text: "Password Reset",
-      html: `<p>Dear user, please reset your password for chat app</p> <p>This <a href="https://localhost:3000/reset/${userId}/${resetToken}">link<a/>will reset your password</p><p>If you do not register on chatApp please ignore this mail</p>`,
+      html: `<p>Dear user, please reset your password for chat app</p> <p>This <a href="http://localhost:3000/reset/${userId}/${resetToken}">link<a/>will reset your password</p><p>If you do not register on chatApp please ignore this mail</p>`,
     };
     transport.sendMail(mailOption, function (err, result) {
       if (err) {

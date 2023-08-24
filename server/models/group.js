@@ -1,15 +1,24 @@
 const mongoose = require("mongoose");
+const groupUsers = new mongoose.Schema({
+  userId: {
+    type: String,
+    required: true,
+  },
+  isAdmin: {
+    type: Boolean,
+    required: true,
+  }
+})
 const groupSchema = new mongoose.Schema({
   group: {
     type: String,
     required: true,
   },
-  messages: {
-    message: String,
-    displayName: String,
-    createdtime: Date,
-    group: String,
-  },
+ users: [groupUsers]
+  
+
+
+
 });
 const Group = mongoose.model("Group", groupSchema)
 
