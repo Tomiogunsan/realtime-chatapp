@@ -3,7 +3,7 @@ require("./config/database").connect();
 const passport = require("passport");
 require("./middleware/passport-config")(passport);
 const express = require("express");
-
+const cors = require("cors")
 const routes = require("./routes");
 
 const app = express();
@@ -13,7 +13,12 @@ const uriEncoder = bodyParser.urlencoded({ extended: false });
 
 app.use(uriEncoder);
 app.use(jsonParser);
+app.use(cors({
+  origin:  "*",
+  credential: true
+})
 
+)
 app.use(passport.initialize());
 app.use("/api", routes);
 // Register
