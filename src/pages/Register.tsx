@@ -4,7 +4,8 @@ import Button from "../sharedComponent/button/button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { string, object } from "yup";
+import * as yup from "yup";
+import { string } from "yup";
 
 export default function Register() {
   const { REACT_APP_BASE_URL } = process.env;
@@ -25,11 +26,11 @@ export default function Register() {
   const { firstName, lastName, password, email } = form;
 
   // create validation schema:
-  const formSchema = object({
-    firstName: string().required(),
-    lastName: string().required(),
-    email: string().required(),
-    password: string().required(),
+  const formSchema = yup.object({
+    firstName: string().required("This field is required"),
+    lastName: string().required("This field is required"),
+    email: string().required("This field is required"),
+    password: string().required("This field is required"),
   });
 
   function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -41,9 +42,9 @@ export default function Register() {
 
   async function handleSubmit(e: any) {
     e.preventDefault();
+
     console.log("Submited");
     try {
-      console.log(form);
       const configuration = await axios.post(
         `${REACT_APP_BASE_URL}/register/`,
         form

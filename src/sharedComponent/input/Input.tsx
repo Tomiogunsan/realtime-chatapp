@@ -12,6 +12,7 @@ export default function Input(props: InputProps) {
         name={name}
         value={value}
         onChange={onChange}
+        required
         className="w-[350px] border outline-[#6d67ff] px-2 py-[10px] mb-2 rounded-md shadow-sm"
       />
     </div>
