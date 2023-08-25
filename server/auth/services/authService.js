@@ -1,6 +1,6 @@
 const { errorResponse, successResponse } = require("../../utils/helper");
 const User = require("../../models/users");
-const PasswordResetToken = require("../../models/passwordReset")
+const PasswordResetToken = require("../../models/passwordReset");
 const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
 const emailService = require("../../email/emailServices");
@@ -55,7 +55,7 @@ class Authservice {
     }
   }
 
-  async RequestPasswordReset(email){
+  async RequestPasswordReset(email) {
     try {
       const user = await User.findOne({ email });
       if (!user) throw new Error("User does not exist ");
@@ -72,34 +72,32 @@ class Authservice {
         createdAt: Date.now(),
       }).save();
       emailService.sendPasswordResetEmail(user.id, user.email, resetToken);
-      if(resetToken){
-         return successResponse(resetToken, "successful", 200);
-      }
+      if (resetToken){
+        return successResponse(resetToken, "successful", 200);
+      } 
     } catch (error) {
-       return errorResponse({}, error.message, 501);
+      return errorResponse({}, error.message, 501);
     }
-    
   }
 
-  
-  async ResetPassword (userId, token, password){
-    let passwordResetToken = await PasswordResetToken.findOne({userId})
-    if(!passwordResetToken){
-      throw new Error("Invalid or expired password reset token")
+  async ResetPassword(userId, token, password) {
+    let passwordResetToken = await PasswordResetToken.findOne({ userId });
+    if (!passwordResetToken) {
+      throw new Error("Invalid or expired password reset token");
     }
-    const isValid = await bcrypt.compare(token, passwordResetToken.token)
-    if(!isValid){
-      throw new Error("Invalid or expired password reset token")
+    const isValid = await bcrypt.compare(token, passwordResetToken.token);
+    if (!isValid) {
+      throw new Error("Invalid or expired password reset token");
     }
-    const hash = await bcrypt.hash(password, salt)
+    const hash = await bcrypt.hash(password, salt);
     await User.updateOne(
-      {_id: userId},
-      {$set: {password:hash}},
-      {new: true}
-    )
-   emailService.sendPasswordResetSuccessEmail()
-   await passwordResetToken.deleteOne()
-   return true;
+      { _id: userId },
+      { $set: { password: hash } },
+      { new: true }
+    );
+    emailService.sendPasswordResetSuccessEmail();
+    await passwordResetToken.deleteOne();
+    return true;
   }
 }
 
