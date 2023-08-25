@@ -32,7 +32,7 @@ export default function Register() {
     }));
   }
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: any) {
     e.preventDefault();
 
     console.log("Submited");
@@ -42,7 +42,6 @@ export default function Register() {
         form
       );
       console.log(configuration);
-      toast.success("User registered sucessfully")
       navigate("/");
     } catch (error: any) {
       toast.error("User Already Exist. Please Login");

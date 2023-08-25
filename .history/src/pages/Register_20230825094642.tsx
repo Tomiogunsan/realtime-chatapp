@@ -25,6 +25,14 @@ export default function Register() {
 
   const { firstName, lastName, password, email } = form;
 
+  // create validation schema:
+  const formSchema = yup.object({
+    firstName: string().required("This field is required"),
+    lastName: string().required("This field is required"),
+    email: string().required("This field is required"),
+    password: string().required("This field is required"),
+  });
+
   function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm((state) => ({
       ...state,
@@ -32,7 +40,7 @@ export default function Register() {
     }));
   }
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: any) {
     e.preventDefault();
 
     console.log("Submited");
@@ -42,7 +50,6 @@ export default function Register() {
         form
       );
       console.log(configuration);
-      toast.success("User registered sucessfully")
       navigate("/");
     } catch (error: any) {
       toast.error("User Already Exist. Please Login");

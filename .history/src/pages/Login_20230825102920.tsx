@@ -33,8 +33,8 @@ export default function Login() {
         form
       );
      console.log(configuration)
-   
-    const token = localStorage.setItem("token" ,configuration?.data?.data?.token)
+     c
+    const token = localStorage.setItem(data?.data?.token)
       navigate("/");
     } catch (error: any) {
       console.log(error)

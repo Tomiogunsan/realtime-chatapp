@@ -34,7 +34,7 @@ export default function Login() {
       );
      console.log(configuration)
    
-    const token = localStorage.setItem("token" ,configuration?.data?.data?.token)
+    const token = localStorage.setItem("",configuration?.data?.data?.token)
       navigate("/");
     } catch (error: any) {
       console.log(error)

@@ -42,7 +42,7 @@ export default function Register() {
         form
       );
       console.log(configuration);
-      toast.success("User registered sucessfully")
+      toast
       navigate("/");
     } catch (error: any) {
       toast.error("User Already Exist. Please Login");

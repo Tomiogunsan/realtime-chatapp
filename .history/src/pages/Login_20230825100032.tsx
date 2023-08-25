@@ -32,20 +32,17 @@ export default function Login() {
         `${REACT_APP_BASE_URL}/login/`,
         form
       );
-     console.log(configuration)
-   
-    const token = localStorage.setItem("token" ,configuration?.data?.data?.token)
+      console.log(configuration);
       navigate("/");
     } catch (error: any) {
-      console.log(error)
-      // toast.error("User Already Exist. Please Login");
+      toast.error("User Already Exist. Please Login");
     }
   }
 
 
     return (
       <div className=" bg-[#c1cbd8] h-[100vh] w-full py-28">
-        <form className=" mx-auto bg-[#ffffff] w-[550px] h-[450px] rounded-2xl shadow-2xl pt-16" onSubmit={handleSubmit}>
+        <form className=" mx-auto bg-[#ffffff] w-[550px] h-[450px] rounded-2xl shadow-2xl pt-16">
           <div className="flex flex-col items-center justify-center">
             <Input
               label="Email"

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import Input from "../sharedComponent/input/Input";
 import Button from "../sharedComponent/button/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 export default function Login() {
-  const navigate = useNavigate()
+  const navigate
   const [form, setForm] = useState({
     password: "",
     email: "",
@@ -32,20 +31,17 @@ export default function Login() {
         `${REACT_APP_BASE_URL}/login/`,
         form
       );
-     console.log(configuration)
-   
-    const token = localStorage.setItem("token" ,configuration?.data?.data?.token)
+      console.log(configuration);
       navigate("/");
     } catch (error: any) {
-      console.log(error)
-      // toast.error("User Already Exist. Please Login");
+      toast.error("User Already Exist. Please Login");
     }
   }
 
 
     return (
       <div className=" bg-[#c1cbd8] h-[100vh] w-full py-28">
-        <form className=" mx-auto bg-[#ffffff] w-[550px] h-[450px] rounded-2xl shadow-2xl pt-16" onSubmit={handleSubmit}>
+        <div className=" mx-auto bg-[#ffffff] w-[550px] h-[450px] rounded-2xl shadow-2xl pt-16">
           <div className="flex flex-col items-center justify-center">
             <Input
               label="Email"
@@ -88,7 +84,7 @@ export default function Login() {
               </Link>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     );
   }

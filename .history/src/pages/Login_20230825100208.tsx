@@ -32,12 +32,9 @@ export default function Login() {
         `${REACT_APP_BASE_URL}/login/`,
         form
       );
-     console.log(configuration)
-   
-    const token = localStorage.setItem("token" ,configuration?.data?.data?.token)
+      console.log(configuration);
       navigate("/");
     } catch (error: any) {
-      console.log(error)
       // toast.error("User Already Exist. Please Login");
     }
   }
